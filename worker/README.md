@@ -177,6 +177,7 @@ If you are using an app such as IP Webcam on a smartphone:
 - Set **Quality to 30–40 %** and **Resolution to 1080*720** 
 - Set **FPS to 15–20** for smoother streaming and lower CPU load.
 - Keep phone and PC on the **same Wi-Fi band (5 GHz preferred)**.
+- Used IPWebcam app on Android with RTSP enabled, and the URL looks like: `rtsp://<ip_address>:8080/h264_ulaw.sdp`.
 
 ## Troubleshooting
 
