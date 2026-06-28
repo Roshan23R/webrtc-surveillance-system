@@ -1,7 +1,0 @@
-webrtcAdditionalHosts: [192.168.0.108]
-webrtcIPsFromInterfaces: true
-webrtcLocalUDPAddress: :8189
-
-paths:
-  cam1:
-    source: rtsp://192.168.0.100:8554/h264_ulaw.sdp
