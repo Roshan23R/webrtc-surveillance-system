@@ -2,44 +2,55 @@ import time
 
 class AlertEngine:
 
+    # Seconds between alerts for the same camera
+    COOLDOWN = 10
+
+    # Consecutive detection frames required before an alert fires.
+    CONFIRM_FRAMES = 3
+
+    # Consecutive missed-detection frames before "person present" is cleared.
+    GRACE_FRAMES = 5
+
     def __init__(self):
         self.person_present = False
         self.last_alert_time = 0
-        self.cooldown = 10  # seconds
+        self._confirm_count = 0   # consecutive frames with person detected
+        self._miss_count = 0      # consecutive frames without person detected
 
+    def process(self, person_found: bool, max_conf: float) -> dict | None:
+        """
+        Call once per detection frame.
 
-    def process(self, results):
-        person_found = False
+        Args:
+            person_found: True if a person box exceeded the confidence threshold.
+            max_conf:     Highest confidence among detected persons (0.0 if none).
 
-        for box in results[0].boxes:
-            cls = int(box.cls[0])
-            confidence = float(box.conf[0])
-
-            # COCO class 0 = person
-            if cls == 0 and confidence > 0.6:
-                person_found = True
-                break
-
+        Returns an alert dict when a new person appearance is confirmed, else None.
+        """
         current_time = time.time()
 
-        # First appearance
-        if (
-            person_found
-            and not self.person_present
-            and current_time - self.last_alert_time > self.cooldown
-        ):
+        if person_found:
+            self._confirm_count += 1
+            self._miss_count = 0
 
-            self.person_present = True
-            self.last_alert_time = current_time
-
-            return {
-                "type": "PERSON_DETECTED",
-                "confidence": confidence,
-                "timestamp": current_time,
-            }
-
-        # Person disappeared
-        if not person_found:
-            self.person_present = False
+            # Require N consecutive detection frames before triggering
+            if (
+                self._confirm_count >= self.CONFIRM_FRAMES
+                and not self.person_present
+                and current_time - self.last_alert_time > self.COOLDOWN
+            ):
+                self.person_present = True
+                self.last_alert_time = current_time
+                return {
+                    "type": "PERSON_DETECTED",
+                    "confidence": round(max_conf, 2),
+                    "timestamp": current_time,
+                }
+        else:
+            self._miss_count += 1
+            self._confirm_count = 0
+            # Allow a few missed frames before declaring person gone
+            if self._miss_count >= self.GRACE_FRAMES:
+                self.person_present = False
 
         return None
