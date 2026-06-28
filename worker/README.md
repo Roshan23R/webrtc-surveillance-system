@@ -64,7 +64,7 @@ pip install -r requirements.txt
 Run from repo root (`Surveillance_System`) so package imports resolve correctly:
 
 ```bash
-uvicorn worker.main:app --host 0.0.0.0 --port 4001 --reload
+uvicorn main:app --host 0.0.0.0 --port 4001 --reload
 ```
 
 Health check:

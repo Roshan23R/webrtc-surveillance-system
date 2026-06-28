@@ -28,7 +28,7 @@ class OfferRequest(BaseModel):
 @app.get("/")
 def home():
     return {
-        "message": "Worker running"
+        "message": "Surveillance System Worker running"
     }
 
 
