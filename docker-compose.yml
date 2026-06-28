@@ -1,16 +1,6 @@
-version: "3.9"
-
 services:
-  mediamtx:
-    image: bluenviron/mediamtx
-    container_name: mediamtx
-    ports:
-      - "8554:8554"
-      - "8889:8889"
-      - "8189:8189/udp" 
-    volumes:
-      - ./mediamtx.yml:/mediamtx.yml
 
+  # PostgreSQL
   db:
     image: postgres:15
     container_name: db
@@ -23,6 +13,42 @@ services:
       - "5432:5432"
     volumes:
       - db_data:/var/lib/postgresql/data
+
+  # Backend 
+  backend:
+    build: ./backend
+    container_name: surveillance-backend
+    depends_on:
+      - db
+      - worker
+    ports:
+      - "4000:4000"
+    environment:
+      DATABASE_URL: postgres://postgres:postgres@db:5432/surveillance_db
+      WORKER_URL: http://surveillance-worker:4001
+      PORT: 4000
+
+  # Worker
+  worker:
+    build: ./worker
+    container_name: surveillance-worker
+    depends_on:
+      - db
+    ports:
+      - "4001:4001"
+    environment:
+      PORT: 4001
+
+  # Frontend
+  frontend:
+    build: ./frontend
+    container_name: surveillance-frontend
+    depends_on:
+      - backend
+    ports:
+      - "5173:5173"
+    environment:
+      VITE_API_URL: http://surveillance-backend:4000
 
 volumes:
   db_data:
