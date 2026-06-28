@@ -49,7 +49,7 @@ export function AuthPage({
           </svg>
         </div>
         <h2 className="mt-6 text-center text-3xl font-extrabold text-zinc-50 tracking-tight">
-          {isLogin ? "Sign in to AI Sentinel" : "Create your account"}
+          {isLogin ? "Sign in to Surveillance System" : "Create your account"}
         </h2>
         <p className="mt-2 text-center text-sm text-zinc-400">
           Or{" "}

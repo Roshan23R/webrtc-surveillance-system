@@ -30,7 +30,7 @@ export function Navbar({
             </div>
           </div>
           <div>
-            <h1 className="text-lg font-black text-white tracking-tight leading-none">AI Sentinel</h1>
+            <h1 className="text-lg font-black text-white tracking-tight leading-none">Surveillance</h1>
             <span className="text-xs font-bold text-violet-400 tracking-widest uppercase">Real-time Surveillance</span>
           </div>
         </div>
