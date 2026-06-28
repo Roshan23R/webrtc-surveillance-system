@@ -3,9 +3,26 @@ version: "3.9"
 services:
   mediamtx:
     image: bluenviron/mediamtx
+    container_name: mediamtx
     ports:
       - "8554:8554"
       - "8889:8889"
-      - "8189:8189/udp"   # ✅ THIS IS CRITICAL
+      - "8189:8189/udp" 
     volumes:
       - ./mediamtx.yml:/mediamtx.yml
+
+  db:
+    image: postgres:15
+    container_name: db
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: surveillance_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+volumes:
+  db_data:
