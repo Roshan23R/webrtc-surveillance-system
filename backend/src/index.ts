@@ -3,6 +3,10 @@ import { serve } from "@hono/node-server"
 import { cors } from "hono/cors"
 import { WebSocketServer } from "ws"
 import { addClient, removeClient } from "./websocket/ws"
+import authRouter from "./routes/auth.route"
+import protectedRouter from "./routes/protected.route"
+import cameraRouter from "./routes/camera.route"
+import alertRouter from "./routes/alert.route"
 
 const app = new Hono();
 
@@ -13,6 +17,27 @@ app.get("/", (c) => {
     message: "Backend running 🚀",
   })
 });
+
+app.route(
+  "/auth",
+  authRouter,
+)
+
+app.route(
+  "/protected",
+  protectedRouter,
+)
+
+app.route(
+  "/cameras",
+  cameraRouter,
+)
+
+app.route(
+  "/alerts",
+  alertRouter,
+)
+
 
 const server = serve({
   fetch: app.fetch,
