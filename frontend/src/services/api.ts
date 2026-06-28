@@ -3,7 +3,7 @@ import type { Alert } from "../types/alert";
 import type { Camera } from "../types/camera";
 
 export const api = axios.create({
-  baseURL: "http://localhost:8000",
+  baseURL: "http://localhost:4000",
 });
 
 // Configure token in axios headers
