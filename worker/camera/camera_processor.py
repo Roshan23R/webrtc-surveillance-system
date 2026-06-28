@@ -2,10 +2,10 @@ import cv2
 import threading
 import time
 import asyncio
-from worker.detection.detector import Detector
-from worker.alerts.alert_engine import AlertEngine
-from worker.services.backend_client import BackendClient
-from worker.streaming.frame_buffer import FrameBuffer
+from detection.detector import Detector
+from alerts.alert_engine import AlertEngine
+from services.backend_client import BackendClient
+from streaming.frame_buffer import FrameBuffer
 
 class CameraProcessor:
 

@@ -1,4 +1,4 @@
-from worker.camera.camera_processor import CameraProcessor
+from camera.camera_processor import CameraProcessor
 
 
 class CameraManager:

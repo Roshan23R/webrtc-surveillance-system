@@ -2,8 +2,8 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
-from worker.camera.camera_manager import CameraManager
-from worker.streaming.webrtc_manager import create_offer_handler
+from camera.camera_manager import CameraManager
+from streaming.webrtc_manager import create_offer_handler
 
 app = FastAPI()
 
