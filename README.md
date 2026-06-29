@@ -150,7 +150,7 @@ WORKER_URL="http://localhost:8001"
 Run database migrations:
 ```bash
 cd backend
-bun install
+bun install or npm install
 bunx drizzle-kit push:pg
 ```
 
@@ -168,12 +168,13 @@ Use a virtual environment to manage dependencies:
 
 ```bash
 cd worker
-python3 -m venv venv
-source venv/bin/activate
+py -3.10 -m venv .venv
+.venv\Scripts\activate
 pip install -r requirements.txt
-uvicorn main:app --reload --port 8001
+or pip install -r requirements.txt --trusted-host pypi.org --trusted-host files.pythonhosted.org
+uvicorn main:app --reload --port 4001
 ```
-*Binds FastAPI to `http://localhost:8001`.*
+*Binds FastAPI to `http://localhost:4001`.*
 
 ### 4. Start the Frontend (Vite React Client)
 
